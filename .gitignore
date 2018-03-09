@@ -1,0 +1,13 @@
+.idea/
+*.iml
+node_modules/
+npm-debug.log
+build/
+docs/
+lib/
+.DS_STORE
+*.sublime-project
+*.sublime-workspace
+yarn-error.log
+coverage/
+.rpt2_cache

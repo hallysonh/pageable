@@ -1,0 +1,118 @@
+{
+  "name": "@hallysonh/pageable",
+  "version": "0.0.0-development",
+  "description": "Pagination inspired by Spring Data's Pagination approach.",
+  "keywords": [
+    "paginate",
+    "pagination",
+    "middleware",
+    "spring"
+  ],
+  "scripts": {
+    "start": "rollup -c rollup.config.ts -w",
+    "build": "yarn run build:lib && yarn run build:docs",
+    "build:lib": "rimraf lib .rpt2_cache && rollup -c rollup.config.ts",
+    "build:docs": "rimraf docs && typedoc --out docs --excludePrivate --target es6 --theme minimal --mode file src",
+    "lint": "tslint --project tsconfig.json src/**",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:prod": "yarn lint && yarn test --coverage --no-cache",
+    "deploy-docs": "ts-node tools/gh-pages-publish",
+    "commit": "git-cz",
+    "semantic-release": "semantic-release",
+    "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
+    "prepush": "npm run test:prod && npm run build",
+    "commitmsg": "validate-commit-msg",
+    "travis-deploy-once": "travis-deploy-once"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hallysonh/pageable"
+  },
+  "author": {
+    "name": "Halyson Almeida",
+    "email": "hallysonh@gmail.com"
+  },
+  "license": "ISC",
+  "homepage": "https://github.com/hallysonh/pageable#readme",
+  "bugs": {
+    "url": "https://github.com/hallysonh/pageable/issues"
+  },
+  "files": [
+    "lib"
+  ],
+  "engines": {
+    "node": ">=8.2.1"
+  },
+  "main": "lib/pageable.umd.js",
+  "module": "lib/pageable.es5.js",
+  "typings": "lib/pageable.d.ts",
+  "devDependencies": {
+    "@types/jest": "^22.1.2",
+    "@types/node": "^9.4.6",
+    "commitizen": "^2.9.6",
+    "cz-conventional-changelog": "^2.1.0",
+    "husky": "^0.14.0",
+    "jest": "^22.4.0",
+    "lint-staged": "^6.0.0",
+    "prettier": "^1.4.4",
+    "prompt": "^1.0.0",
+    "rimraf": "^2.6.1",
+    "rollup": "^0.55.5",
+    "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-json": "^2.3.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "rollup-plugin-typescript2": "^0.11.1",
+    "rollup-plugin-uglify": "^3.0.0",
+    "semantic-release": "^12.4.1",
+    "travis-deploy-once": "^4.3.4",
+    "ts-jest": "^22.0.4",
+    "ts-node": "^4.1.0",
+    "tslint": "^5.8.0",
+    "tslint-config-prettier": "^1.1.0",
+    "tslint-config-standard": "^7.0.0",
+    "typedoc": "^0.10.0",
+    "typescript": "^2.6.2",
+    "validate-commit-msg": "^2.12.2"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 90,
+        "functions": 95,
+        "lines": 95,
+        "statements": 95
+      }
+    },
+    "collectCoverage": true
+  },
+  "lint-staged": {
+    "{src,test}/**/*.ts": [
+      "prettier --write --no-semi --single-quote",
+      "git add"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    },
+    "validate-commit-msg": {
+      "types": "conventional-commit-types",
+      "helpMessage": "Use \"npm run commit\" instead, we use conventional-changelog format :) (https://github.com/commitizen/cz-cli)"
+    }
+  }
+}

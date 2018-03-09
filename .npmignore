@@ -1,0 +1,11 @@
+docs/
+node_modules/
+test/
+src/
+tools/
+.editorconfig
+.gitignore
+.travis.yml
+rollup.config.ts
+tsconfig.json
+tslint.json
