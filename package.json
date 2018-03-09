@@ -114,8 +114,5 @@
       "types": "conventional-commit-types",
       "helpMessage": "Use \"npm run commit\" instead, we use conventional-changelog format :) (https://github.com/commitizen/cz-cli)"
     }
-  },
-  "dependencies": {
-    "semantic-release-cli": "^3.6.3"
   }
 }
