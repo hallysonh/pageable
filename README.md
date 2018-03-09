@@ -1,17 +1,16 @@
-# Koa Pageable
+# Pageable Library
 
-[![travis build](https://travis-ci.org/hallysonh/koa-pageable.svg?branch=master)](https://travis-ci.org/hallysonh/koa-pageable)
-[![Greenkeeper badge](https://badges.greenkeeper.io/hallysonh/koa-pageable.svg)](https://greenkeeper.io/)
-[![version](https://img.shields.io/npm/v/@hallysonh/koa-pageable.svg)](http://npm.im/@hallysonh/koa-pageable)
-[![MIT License](https://img.shields.io/github/license/hallysonh/koa-pageable.svg)](https://opensource.org/licenses/MIT)
+[![travis build](https://travis-ci.org/hallysonh/pageable.svg?branch=master)](https://travis-ci.org/hallysonh/pageable)
+[![Greenkeeper badge](https://badges.greenkeeper.io/hallysonh/pageable.svg)](https://greenkeeper.io/)
+[![version](https://img.shields.io/npm/v/@hallysonh/pageable.svg)](http://npm.im/@hallysonh/pageable)
+[![MIT License](https://img.shields.io/github/license/hallysonh/pageable.svg)](https://opensource.org/licenses/MIT)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 * [About](#about)
 * [Overview](#overview)
   * [Request](#request)
-    * [Query parameters](#query-parameters)
-      * [Pageable](#pageable)
-      * [Sort](#sort)
+    * [Pageable](#pageable)
+    * [Sort](#sort)
     * [Errors](#errors)
   * [Response](#response)
     * [All Page types](#all-page-types)
@@ -28,32 +27,15 @@
     * [yarn](#yarn)
   * [Requirements](#requirements)
   * [Examples](#examples)
-    * [Router](#router)
-    * [Data Access](#data-access)
 * [API Documentation](#api-documentation)
 
 ## About
 
-`koa-pageable` is middleware for pagination in [Koa](https://github.com/koajs/koa) inspired by  [Spring Data](http://docs.spring.io/spring-data/commons/docs/current/reference/html/)'s Pagination support.
-
-It allows clients of your API to easily request subsets of your data by providing query parameters to specify the amount, order, and formatting of the requested data. For instance, if you had an endpoint `/people` backed by a data store containing 1000 people records, `koa-pageable` allows a client to request the data be broken up into 10 person pages, and to receive 2nd page of people sorted by their lastname (`GET /people?page=1&size=10&sort=lastname`)
+`pageable` is a bundle of utility classes used to deal with pagination inspired by  [Spring Data](http://docs.spring.io/spring-data/commons/docs/current/reference/html/)'s Pagination support.
 
 ## Overview
 
 ### Request
-
-#### Query parameters
-
-When enabled this middleware parses request query parameters from `ctx.query` into an instance of `Pageable`.
-
-**These values are:**
-
-Parameter | Default Value | Description
-----------|---------------|------------
-`page`    | `0`           | The 0-indexed page to be retrieved
-`size`    | `10`          | Maximum number of elements to be included in the retrieved page
-`sort`    | `undefined`   | Properties that should be sorted, in the specified order. Properties are separated by a `,` and directions are separated with a `:`. Valid directions are `asc` and `desc` and if not specified, direction defaults to `asc`. For example to sort by `lastname` ascending, then `firstname` descending: `?sort=lastname,firstname:desc`|
-`indexed` | `false`       | If the underlying content supports it (i.e. has an `id` property) return results in indexed format. Which is an array of ids and a map of {id : content item}
 
 #### Pageable
 
@@ -69,7 +51,7 @@ Each `sort` instance has a `forEach(callback(property,direction))` method that i
 
 If the `page` or `size` query parameter are not specified as valid numbers, a `NumberFormatError` will be thrown. If the sort direction is specified as anything other than `asc` or `desc` (e.g. `sort=lastName:foo`) then an `InvalidSortError` will be thrown.
 
-#### Response
+### Response
 
 The data returned from a using this middleware should be an instance of a subclass of `Page`.
 
@@ -121,89 +103,6 @@ An `IndexablePage` is a special case of `Page`, it internally stores its data in
 Upon serialization (i.e. invoking `toJSON()`) if the `pageable.indexed` value is set to `true`, the result will be serialized as an `IndexedPage` (else as an `ArrayPage`).
 In order to support this automatic conversion, the underlying content items _must_ each contain an `id` property.
 
-#### Output Format
-
-##### Non-Indexed
-
-`GET /people?page=2&size=2&sort=firstname,lastname:desc&indexed=false`
-
-```typescript
-{
-  "number": 2,
-  "size": 2,
-  "sort": [
-    {
-      "direction": "asc",
-      "property": "firstname"
-    },
-    {
-      "direction": "lastname",
-      "property": "desc"
-    }
-  ],
-  "totalElements": 18,
-  "totalPages": 9,
-  "first": false,
-  "last": false,
-  "indexed": false,
-  "content": [
-    {
-      "id": 202,
-      "firstName": "Bob",
-      "lastName": "Smith"
-    },
-    {
-      "id": 200,
-      "firstName": "Bob",
-      "lastName": "Jones"
-    }
-  ],
-  "numberOfElements": 2
-}
-```
-
-##### Indexed
-
-`GET /people?page=2&size=2&sort=firstname,lastname:desc&indexed=true`
-
-```javascript
-{
-  "number": 2,
-  "size": 2,
-  "sort": [
-    {
-      "direction": "desc",
-      "property": "id"
-    },
-    {
-      "direction": "asc",
-      "property": "createdTimestamp"
-    }
-  ],
-  "totalElements": 18,
-  "totalPages": 9,
-  "first": false,
-  "last": false,
-  "ids": [
-    202,
-    200
-  ],
-  "index": {
-    "200": {
-      "id": 200,
-      "firstName": "Frank",
-      "lastName": "Jones"
-    },
-    "202": {
-      "id": 202,
-      "firstName": "Bob",
-      "lastName": "Jones"
-    }
-  },
-  "numberOfElements": 2
-}
-```
-
 ## Getting Started
 
 ### Installation
@@ -211,67 +110,30 @@ In order to support this automatic conversion, the underlying content items _mus
 #### npm
 
 ```bash
-npm install @hallysonh/koa-pageable
+npm install @hallysonh/pageable
 ```
 
 #### yarn
 
 ```bash
-yarn add @hallysonh/koa-pageable
+yarn add @hallysonh/pageable
 ```
 
 ### Requirements
 
-Requires `node` >= `8.2`, as `koa-pageable` makes use of async/await. [Flow](http://flowtype.org) bindings are also provided.
+Requires `node` >= `8.2`, as `pageable` makes use of async/await. [Flow](http://flowtype.org) bindings are also provided.
 Note: The following examples includes optional flow type annotations for clarity.
 
-`koa-pageable` is a convenient library for managing conversion of user intent (via request parameters) into a `Pageable` object, but it is still your responsibility to implement that intention when accessing data. You are responsible for ensuring that your data access tier properly implements the pagination and/or sorting, and for creating the `Page` instances to be returned. The exact approach for doing so will differ based on your chose Data Access framework.
+`pageable` is a convenient library for managing conversion of user intent (via request parameters) into a `Pageable` object, but it is still your responsibility to implement that intention when accessing data. You are responsible for ensuring that your data access tier properly implements the pagination and/or sorting, and for creating the `Page` instances to be returned. The exact approach for doing so will differ based on your chose Data Access framework.
 
 ### Examples
 
-#### Router
-
 ```typescript
-import { Pageable, IndexedPage, paginate } from '@hallysonh/koa-pageable';
-import Koa from 'koa';
+import { Pageable, IndexedPage } from '@hallysonh/pageable';
 
-var app = new Koa();
-app.use(paginate);
-
-app.use(async ctx => {
-  // the pageable created from query parameters will be stored in ctx.state.pageable
-  const pageable: Pageable = ctx.state.pageable;
-  // pass the pageable down into any service and data access tiers, and use its properties to retrieve the appropriate data and return it as a Page
-  const result: IndexedPage<Person> = service.getData(pageable);
-});
-```
-
-#### Data Access
-
-Example of using `pageable` as input to a query, and `Page` as the response type.
-This example is based on [Objection](http://vincit.github.io/objection.js/) but should be translatable to any data access / ORM framework.
-
-```typescript
-import { IndexablePage, Pageable, Sort, } from '@hallysonh/koa-pageable';
-import type { QueryBuilder } from 'objection';
-
-function getData(pageable: Pageable): IndexablePage<Foo> {
-  const pageNumber = pageable.page;
-  const pageSize = pageable.size;
-  const sort: Sort  = pageable.sort;
-
-  const queryBuilder: QueryBuilder = Person.query().where('age', '>', 21).page(pageNumber, pageSize);
-
-  //If there is a sort, add each order element to the query's `orderBy`
-  if (sort) {
-    sort.forEach((property, direction) => queryBuilder.orderBy(property, direction));
-  }
-  const result = await query.execute();
-
-  return new IndexablePage(result.results, result.total, pageable);
-}
+...
 ```
 
 ## API Documentation
 
-Access the documentation [here](https://hallysonh.github.io/koa-pageable/)
+Access the documentation [here](https://hallysonh.github.io/pageable/)
