@@ -33,6 +33,12 @@
     "name": "Halyson Almeida",
     "email": "hallysonh@gmail.com"
   },
+  "contributors": [
+    {
+      "name": "Pandera Labs",
+      "url": "https://www.panderalabs.com"
+    }
+  ],
   "license": "ISC",
   "homepage": "https://github.com/hallysonh/pageable#readme",
   "bugs": {
