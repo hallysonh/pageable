@@ -1,18 +1,18 @@
 language: node_js
-branches:
-  only:
-    - master
-    - /^greenkeeper/.*$/
+branches.only:
+  - master
+  - /^greenkeeper/.*$/
 cache:
   yarn: true
-  directories:
-    - node_modules
-notifications:
-  email: false
-node_js:
-  - node
+  directories: node_modules
+notifications.email: false
+node_js: node
+before_install: yarn global add greenkeeper-lockfile@1
+before_script: greenkeeper-lockfile-update
 script:
-  - npm run test:prod && npm run build
+  - yarn test:prod
+  - yarn build
+after_script: greenkeeper-lockfile-upload
 after_success:
-  - npm run deploy-docs
-  - npm run semantic-release
+  - yarn deploy-docs
+  - yarn semantic-release
