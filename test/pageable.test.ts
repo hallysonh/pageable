@@ -99,6 +99,7 @@ describe('Tests', () => {
     [
       { value: 'singleValue', type: 'string' },
       { value: ['valueA', 'valueB:desc', 'valueC:asc'], type: 'array of strings' },
+      { value: 'valueA;valueB:desc;valueC:asc', type: 'string with many order items' },
       { value: new Sort(orders.slice(1, 3)), type: 'sort' },
     ].forEach(({ value, type }) => {
       it(`returns a valid Sort instance when a value of type ${type} is passed to the constructor`, () => {
@@ -123,6 +124,7 @@ describe('Tests', () => {
 
     it('throws error when invalid sort direction is provided', async () => {
       try {
+        // tslint:disable-next-line:no-unused-expression
         new Pageable(0, 10, false, 'firstName:foo');
       } catch (e) {
         expect(e.message).toBe('Invalid Sort Direction, must be one of "asc" or "desc"');

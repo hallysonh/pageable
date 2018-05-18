@@ -381,6 +381,23 @@ Array [
 ]
 `;
 
+exports[`Tests Pageable class returns a valid Sort instance when a value of type string with many order items is passed to the constructor 1`] = `
+Array [
+  Order {
+    "direction": "asc",
+    "property": "valueA",
+  },
+  Order {
+    "direction": "desc",
+    "property": "valueB",
+  },
+  Order {
+    "direction": "asc",
+    "property": "valueC",
+  },
+]
+`;
+
 exports[`Tests Sort class instance.forEach() method result matches snapshot 1`] = `
 Object {
   "directions": Array [

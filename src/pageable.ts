@@ -168,25 +168,24 @@ export class Sort {
  * @throws {@link InvalidSortError} if requested direction is not "asc" or "desc"
  */
 function parseSort(sortRequestQuery: string | Array<string>): Sort {
-  let paramArray: Array<string>;
+  let paramArray: Array<string[]>;
 
   // Multi-value params - convert to flat list of string
   if (Array.isArray(sortRequestQuery)) {
     paramArray = new Array();
-    sortRequestQuery.map(it => it.split(',')).forEach(submap => {
-      submap.forEach(x => paramArray.push(x));
+    console.log();
+    sortRequestQuery.map(it => it.split(':')).forEach(submap => {
+      paramArray.push(submap);
     });
   } else { // single param
-    paramArray = sortRequestQuery.split(',');
+    paramArray = sortRequestQuery.split(';').map(x => x.split(':'));
   }
 
   // Ensure that only valid values are used (multiple commas are excluded).
   const validArray = paramArray.filter(param => (param.length > 0));
 
-  const orderList = validArray.map((it) => {
-    // Ensure that only valid values are used (if multiple colons were specified in error).
-    const result = it.split(':').filter(value => (value.length > 0));
-    return new Order(result[0], stringToDirection(result[1]));
+  const orderList = validArray.filter(x => x.length > 0 && x[0].length > 0).map((it) => {
+    return new Order(it[0], stringToDirection(it[1]));
   });
 
   return new Sort(orderList);
