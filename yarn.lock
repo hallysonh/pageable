@@ -135,9 +135,10 @@
   version "9.12.2"
   resolved "https://registry.yarnpkg.com/@types/highlight.js/-/highlight.js-9.12.2.tgz#6ee7cd395effe5ec80b515d3ff1699068cd0cd1d"
 
-"@types/jest@^22.1.2":
-  version "22.2.3"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-22.2.3.tgz#0157c0316dc3722c43a7b71de3fdf3acbccef10d"
+"@types/jest@^24.0.2":
+  version "24.0.2"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-24.0.2.tgz#a10ad017ee020b2dfa97655323dbf1f38f14f588"
+  integrity sha512-YCGS1XGfAnDLUy8IL7iZf+Tnl0jhnaWUhrx8H/WyaDnjsu9dQBO8jiQqgJi/4BEryY6gvaqf1OvB1B2BvsW4dg==
 
 "@types/lodash@4.14.104":
   version "4.14.104"
