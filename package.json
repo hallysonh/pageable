@@ -54,7 +54,7 @@
   "module": "lib/pageable.es5.js",
   "typings": "lib/pageable.d.ts",
   "devDependencies": {
-    "@types/jest": "^22.1.2",
+    "@types/jest": "^24.0.14",
     "@types/node": "^10.0.9",
     "commitizen": "^2.9.6",
     "cz-conventional-changelog": "^2.1.0",
