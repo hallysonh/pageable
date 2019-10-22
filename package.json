@@ -55,7 +55,7 @@
   "typings": "lib/pageable.d.ts",
   "devDependencies": {
     "@types/jest": "^22.1.2",
-    "@types/node": "^10.0.9",
+    "@types/node": "^12.11.4",
     "commitizen": "^2.9.6",
     "cz-conventional-changelog": "^2.1.0",
     "husky": "^0.14.0",
